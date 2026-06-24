@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import { useLocale } from "@/i18n/context";
 import { motion } from "framer-motion";
 import { ExternalLink } from "lucide-react";
@@ -42,6 +43,45 @@ const videos = [
   "/videos/tiktok2.mp4",
   "/videos/tiktok3.mp4",
 ];
+
+function AutoPlayVideo({ src, delay }: { src: string; delay: number }) {
+  const ref = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    el.muted = true;
+    el.loop = true;
+    el.playsInline = true;
+
+    const tryPlay = () => {
+      el.play().catch(() => {
+        // If autoplay is blocked, retry on first user interaction
+        const resume = () => {
+          el.play().catch(() => {});
+          document.removeEventListener("click", resume);
+          document.removeEventListener("touchstart", resume);
+        };
+        document.addEventListener("click", resume, { once: true });
+        document.addEventListener("touchstart", resume, { once: true });
+      });
+    };
+
+    const timer = setTimeout(tryPlay, delay);
+    return () => clearTimeout(timer);
+  }, [delay]);
+
+  return (
+    <video
+      ref={ref}
+      src={src}
+      muted
+      loop
+      playsInline
+      className="w-full h-full object-cover"
+    />
+  );
+}
 
 export function Reels() {
   const locale = useLocale();
@@ -125,7 +165,7 @@ export function Reels() {
             </motion.div>
           </div>
 
-          {/* Right — autoplay video cards */}
+          {/* Right — video cards */}
           <div className="flex gap-4 items-end shrink-0">
             {videos.map((src, i) => (
               <motion.div
@@ -137,14 +177,7 @@ export function Reels() {
                 style={{ marginTop: i === 1 ? 0 : i === 0 ? 48 : 28 }}
                 className="relative w-[130px] sm:w-[155px] aspect-[9/16] rounded-2xl overflow-hidden border border-white/10 shadow-2xl group"
               >
-                <video
-                  src={src}
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                  className="w-full h-full object-cover"
-                />
+                <AutoPlayVideo src={src} delay={i * 200} />
 
                 {/* Gradient overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/10 pointer-events-none" />
