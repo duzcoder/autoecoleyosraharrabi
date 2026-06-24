@@ -12,6 +12,7 @@ import { Reviews } from "@/components/sections/Reviews";
 import { Location } from "@/components/sections/Location";
 import { FAQ } from "@/components/sections/FAQ";
 import { Reels } from "@/components/sections/Reels";
+import { WhatsAppButton } from "@/components/shared/WhatsAppButton";
 
 const queryClient = new QueryClient();
 
@@ -27,6 +28,7 @@ function Home() {
       <Reviews />
       <Location />
       <FAQ />
+      <WhatsAppButton />
     </div>
   );
 }
