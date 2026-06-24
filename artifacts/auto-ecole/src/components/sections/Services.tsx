@@ -14,8 +14,8 @@ export function Services() {
       cta: "Découvrir nos forfaits",
       perHour: "/ heure",
       prices: [
-        { label: "Heure code", price: "20", icon: BookOpen, highlight: false },
-        { label: "Heure conduite", price: "35", icon: Car, highlight: true },
+        { label: "Heure code", price: "15", icon: BookOpen, highlight: false },
+        { label: "Heure conduite", price: "30", icon: Car, highlight: true },
         { label: "Heure manœuvre", price: "35", icon: RotateCcw, highlight: false },
         { label: "Heure recyclage", price: "35", icon: Car, highlight: false },
       ],
@@ -26,8 +26,8 @@ export function Services() {
       cta: "Discover our packages",
       perHour: "/ hour",
       prices: [
-        { label: "Theory lesson", price: "20", icon: BookOpen, highlight: false },
-        { label: "Driving lesson", price: "35", icon: Car, highlight: true },
+        { label: "Theory lesson", price: "15", icon: BookOpen, highlight: false },
+        { label: "Driving lesson", price: "30", icon: Car, highlight: true },
         { label: "Manoeuvre lesson", price: "35", icon: RotateCcw, highlight: false },
         { label: "Refresher lesson", price: "35", icon: Car, highlight: false },
       ],
@@ -38,8 +38,8 @@ export function Services() {
       cta: "اكتشف باقاتنا",
       perHour: "/ ساعة",
       prices: [
-        { label: "ساعة نظرية", price: "20", icon: BookOpen, highlight: false },
-        { label: "ساعة قيادة", price: "35", icon: Car, highlight: true },
+        { label: "ساعة نظرية", price: "15", icon: BookOpen, highlight: false },
+        { label: "ساعة قيادة", price: "30", icon: Car, highlight: true },
         { label: "ساعة مناورة", price: "35", icon: RotateCcw, highlight: false },
         { label: "ساعة تجديد", price: "35", icon: Car, highlight: false },
       ],
