@@ -1,0 +1,18 @@
+{
+  "Navigation": {
+    "home": "Home",
+    "about": "About",
+    "services": "Services",
+    "gallery": "Gallery",
+    "reviews": "Reviews",
+    "faq": "FAQ",
+    "contact": "Contact",
+    "language": "Language"
+  },
+  "Hero": {
+    "title": "Your driving success starts here",
+    "subtitle": "Professional driving school with personalized support and high success rates.",
+    "cta_contact": "Contact Us",
+    "cta_courses": "View Our Courses"
+  }
+}

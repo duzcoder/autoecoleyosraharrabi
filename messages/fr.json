@@ -1,0 +1,18 @@
+{
+  "Navigation": {
+    "home": "Accueil",
+    "about": "À Propos",
+    "services": "Nos Services",
+    "gallery": "Galerie",
+    "reviews": "Avis",
+    "faq": "FAQ",
+    "contact": "Contact",
+    "language": "Langue"
+  },
+  "Hero": {
+    "title": "Votre réussite au permis commence ici",
+    "subtitle": "Auto-école professionnelle avec un accompagnement personnalisé et des taux de réussite élevés.",
+    "cta_contact": "Nous contacter",
+    "cta_courses": "Voir nos formations"
+  }
+}
