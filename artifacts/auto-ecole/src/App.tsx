@@ -11,7 +11,6 @@ import { Gallery } from "@/components/sections/Gallery";
 import { Reviews } from "@/components/sections/Reviews";
 import { Location } from "@/components/sections/Location";
 import { FAQ } from "@/components/sections/FAQ";
-import { Contact } from "@/components/sections/Contact";
 import { Reels } from "@/components/sections/Reels";
 
 const queryClient = new QueryClient();
@@ -28,7 +27,6 @@ function Home() {
       <Reviews />
       <Location />
       <FAQ />
-      <Contact />
     </div>
   );
 }

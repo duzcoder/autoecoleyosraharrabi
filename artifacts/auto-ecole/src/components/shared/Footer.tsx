@@ -103,12 +103,8 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-red-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-red-200">
+        <div className="border-t border-red-800 mt-12 pt-8 text-center text-xs text-red-200">
           <p>© {currentYear} Auto École Yosra Harrabi. Tous droits réservés.</p>
-          <div className="flex gap-4">
-            <a href="#" className="hover:text-white transition-colors">Politique de confidentialité</a>
-            <a href="#" className="hover:text-white transition-colors">Conditions d'utilisation</a>
-          </div>
         </div>
       </div>
     </footer>
