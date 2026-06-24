@@ -38,9 +38,9 @@ const content = {
 };
 
 const videos = [
-  "https://assets.mixkit.co/videos/preview/mixkit-driving-on-an-empty-highway-4011-large.mp4",
-  "https://assets.mixkit.co/videos/preview/mixkit-man-driving-a-car-on-a-road-trip-40371-large.mp4",
-  "https://assets.mixkit.co/videos/preview/mixkit-aerial-view-of-city-traffic-at-night-11-large.mp4",
+  "/videos/demo1.mp4",
+  "/videos/demo2.mp4",
+  "/videos/demo3.mp4",
 ];
 
 export function Reels() {
