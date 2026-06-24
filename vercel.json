@@ -1,6 +1,6 @@
 {
   "buildCommand": "pnpm --filter @workspace/auto-ecole run build",
-  "outputDirectory": "artifacts/auto-ecole/dist/public",
+  "outputDirectory": "public",
   "installCommand": "pnpm install",
   "framework": null,
   "rewrites": [
