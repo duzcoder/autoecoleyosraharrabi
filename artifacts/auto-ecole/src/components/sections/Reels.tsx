@@ -1,270 +1,195 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
 import { useLocale } from "@/i18n/context";
 import { motion } from "framer-motion";
-import { Play, ExternalLink, ChevronLeft, ChevronRight } from "lucide-react";
+import { ExternalLink, Music2, Heart, MessageCircle, Share2 } from "lucide-react";
 
-interface Reel {
-  id: string;
-  title: string;
-  description: string;
-  permalink_url: string;
-  thumbnail: string | null;
-  duration: number;
-  embed_url: string;
-}
+const TIKTOK_URL = "https://www.tiktok.com/@yosraharrabii";
+const TIKTOK_HANDLE = "@yosraharrabii";
 
 const content = {
   fr: {
-    title: "Nos Reels",
-    heading: "Suivez-nous sur Facebook",
-    description: "Découvrez nos dernières vidéos et moments partagés avec nos élèves.",
-    loading: "Chargement des vidéos...",
-    error: "Impossible de charger les vidéos pour le moment.",
-    watchOn: "Voir sur Facebook",
-    noToken: "Les vidéos seront disponibles dès la configuration du compte Facebook.",
+    badge: "Rejoignez-nous",
+    heading: "Suivez-nous sur TikTok",
+    description: "Conseils de conduite, témoignages d'élèves et coulisses de votre auto-école préférée.",
+    cta: "Voir notre TikTok",
+    pill1: "Conseils conduite",
+    pill2: "Témoignages",
+    pill3: "Permis réussi",
+    pill4: "Code de la route",
   },
   en: {
-    title: "Our Reels",
-    heading: "Follow Us on Facebook",
-    description: "Discover our latest videos and moments shared with our students.",
-    loading: "Loading videos...",
-    error: "Unable to load videos at this time.",
-    watchOn: "Watch on Facebook",
-    noToken: "Videos will be available once the Facebook account is configured.",
+    badge: "Join us",
+    heading: "Follow Us on TikTok",
+    description: "Driving tips, student testimonials and behind the scenes of your favourite driving school.",
+    cta: "See our TikTok",
+    pill1: "Driving tips",
+    pill2: "Testimonials",
+    pill3: "License success",
+    pill4: "Highway code",
   },
   ar: {
-    title: "مقاطعنا",
-    heading: "تابعونا على فيسبوك",
-    description: "اكتشف آخر مقاطعنا واللحظات التي نشاركها مع طلابنا.",
-    loading: "جارٍ تحميل الفيديوهات...",
-    error: "تعذر تحميل الفيديوهات في الوقت الحالي.",
-    watchOn: "شاهد على فيسبوك",
-    noToken: "ستتوفر الفيديوهات بمجرد إعداد حساب فيسبوك.",
+    badge: "انضم إلينا",
+    heading: "تابعونا على تيك توك",
+    description: "نصائح قيادة، شهادات طلاب وكواليس مدرسة تعليم السياقة المفضلة لديك.",
+    cta: "شاهد تيك توكنا",
+    pill1: "نصائح القيادة",
+    pill2: "شهادات",
+    pill3: "نجاح الرخصة",
+    pill4: "قانون المرور",
   },
 };
 
-function ReelCard({ reel, onClick }: { reel: Reel; onClick: () => void }) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      className="group relative shrink-0 w-[260px] sm:w-[300px] cursor-pointer"
-      onClick={onClick}
-    >
-      <div className="relative aspect-[9/16] rounded-2xl overflow-hidden bg-zinc-800 shadow-xl">
-        {reel.thumbnail ? (
-          <img
-            src={reel.thumbnail}
-            alt={reel.title || "Reel"}
-            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-            loading="lazy"
-          />
-        ) : (
-          <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-primary/30 to-destructive/20">
-            <Play className="h-16 w-16 text-white/40" />
-          </div>
-        )}
-
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="w-14 h-14 rounded-full bg-white/20 backdrop-blur-sm border border-white/30 flex items-center justify-center group-hover:bg-white/30 group-hover:scale-110 transition-all duration-300">
-            <Play className="h-6 w-6 text-white fill-white ml-0.5" />
-          </div>
-        </div>
-
-        {reel.title && (
-          <div className="absolute bottom-0 left-0 right-0 p-4">
-            <p className="text-white text-sm font-medium line-clamp-2 leading-snug">
-              {reel.title}
-            </p>
-          </div>
-        )}
-      </div>
-    </motion.div>
-  );
-}
-
-function VideoModal({
-  reel,
-  onClose,
-  t,
-}: {
-  reel: Reel;
-  onClose: () => void;
-  t: (typeof content)["fr"];
-}) {
-  useEffect(() => {
-    function onKey(e: KeyboardEvent) {
-      if (e.key === "Escape") onClose();
-    }
-    document.addEventListener("keydown", onKey);
-    return () => document.removeEventListener("keydown", onKey);
-  }, [onClose]);
-
-  return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      className="fixed inset-0 z-[100] bg-black/90 flex items-center justify-center p-4"
-      onClick={onClose}
-    >
-      <motion.div
-        initial={{ scale: 0.9, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        exit={{ scale: 0.9, opacity: 0 }}
-        className="relative w-full max-w-xl bg-zinc-900 rounded-2xl overflow-hidden shadow-2xl"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <div className="aspect-video">
-          <iframe
-            src={reel.embed_url}
-            width="100%"
-            height="100%"
-            style={{ border: 0 }}
-            allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
-            allowFullScreen
-            className="block"
-          />
-        </div>
-        <div className="p-4 flex items-center justify-between gap-4">
-          {reel.title && (
-            <p className="text-white text-sm font-medium truncate">{reel.title}</p>
-          )}
-          <a
-            href={reel.permalink_url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="shrink-0 inline-flex items-center gap-1.5 text-xs font-semibold text-primary hover:underline"
-          >
-            <ExternalLink className="h-3.5 w-3.5" />
-            {t.watchOn}
-          </a>
-        </div>
-        <button
-          className="absolute top-3 right-3 text-white/70 hover:text-white bg-black/50 p-1.5 rounded-full backdrop-blur-sm"
-          onClick={onClose}
-        >
-          <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <path d="M18 6 6 18M6 6l12 12" strokeLinecap="round" />
-          </svg>
-        </button>
-      </motion.div>
-    </motion.div>
-  );
-}
+const mockVideos = [
+  { likes: "1.2k", comments: "48", shares: "92", color: "from-rose-500/30 to-pink-900/40" },
+  { likes: "3.4k", comments: "121", shares: "204", color: "from-violet-500/30 to-blue-900/40" },
+  { likes: "876", comments: "33", shares: "67", color: "from-cyan-500/30 to-indigo-900/40" },
+];
 
 export function Reels() {
   const locale = useLocale();
   const t = content[locale as keyof typeof content] ?? content.fr;
 
-  const [reels, setReels] = useState<Reel[]>([]);
-  const [status, setStatus] = useState<"loading" | "ok" | "error" | "no-token">("loading");
-  const [selected, setSelected] = useState<Reel | null>(null);
-  const scrollRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    fetch("/api/facebook/reels")
-      .then((r) => r.json())
-      .then((data) => {
-        if (data.error?.includes("FACEBOOK_ACCESS_TOKEN")) {
-          setStatus("no-token");
-        } else if (data.reels?.length) {
-          setReels(data.reels);
-          setStatus("ok");
-        } else {
-          setStatus("error");
-        }
-      })
-      .catch(() => setStatus("error"));
-  }, []);
-
-  const scroll = (dir: "left" | "right") => {
-    scrollRef.current?.scrollBy({ left: dir === "right" ? 320 : -320, behavior: "smooth" });
-  };
-
   return (
-    <section className="py-24 bg-[#051e52] overflow-hidden relative">
+    <section className="relative py-24 bg-black overflow-hidden">
+      {/* Neon glow blobs */}
+      <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-[#fe2c55]/20 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-[#25f4ee]/15 rounded-full blur-[120px] pointer-events-none" />
+
+      {/* Subtle grid */}
       <div
         className="absolute inset-0 opacity-[0.04] pointer-events-none"
-        style={{ backgroundImage: "radial-gradient(circle,#fff 1px,transparent 1px)", backgroundSize: "28px 28px" }}
+        style={{ backgroundImage: "radial-gradient(circle,#fff 1px,transparent 1px)", backgroundSize: "30px 30px" }}
       />
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-12">
-          <div>
-            <p className="text-destructive font-bold uppercase tracking-wider text-sm mb-2">
-              {t.title}
-            </p>
-            <h2 className="text-3xl md:text-5xl font-extrabold text-white leading-tight">
-              {t.heading}
-            </h2>
-            <p className="text-white/50 mt-3 max-w-md text-sm">{t.description}</p>
+        <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
+
+          {/* Left — text */}
+          <div className="flex-1 text-center lg:text-left">
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="inline-flex items-center gap-2 bg-white/5 border border-white/10 rounded-full px-4 py-1.5 mb-6"
+            >
+              <span className="text-[#fe2c55] text-xs font-bold uppercase tracking-widest">{t.badge}</span>
+            </motion.div>
+
+            <motion.h2
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1 }}
+              className="text-4xl md:text-6xl font-black text-white leading-tight mb-6"
+            >
+              Suivez-nous sur{" "}
+              <span className="relative inline-block">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#fe2c55] to-[#25f4ee]">
+                  TikTok
+                </span>
+              </span>
+            </motion.h2>
+
+            <motion.p
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+              className="text-white/50 text-lg mb-8 max-w-md mx-auto lg:mx-0"
+            >
+              {t.description}
+            </motion.p>
+
+            {/* Hashtag pills */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.3 }}
+              className="flex flex-wrap gap-2 justify-center lg:justify-start mb-10"
+            >
+              {[t.pill1, t.pill2, t.pill3, t.pill4].map((tag) => (
+                <span key={tag} className="text-xs font-semibold bg-white/8 border border-white/10 text-white/60 rounded-full px-3 py-1">
+                  #{tag.replace(/\s/g, "")}
+                </span>
+              ))}
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.35 }}
+              className="flex flex-col sm:flex-row items-center gap-4 justify-center lg:justify-start"
+            >
+              <a
+                href={TIKTOK_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group inline-flex items-center gap-3 bg-gradient-to-r from-[#fe2c55] to-[#ff6b81] text-white font-bold px-7 py-4 rounded-full text-sm hover:shadow-[0_0_30px_rgba(254,44,85,0.5)] hover:scale-105 transition-all duration-300"
+              >
+                <svg className="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.79 1.54V6.78a4.85 4.85 0 0 1-1.02-.09z"/>
+                </svg>
+                {t.cta}
+                <ExternalLink className="h-4 w-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+              </a>
+
+              <span className="text-white/30 text-sm font-mono">{TIKTOK_HANDLE}</span>
+            </motion.div>
           </div>
 
-          <div className="flex gap-2 shrink-0">
-            <button
-              onClick={() => scroll("left")}
-              className="w-10 h-10 rounded-full border border-white/20 bg-white/5 hover:bg-white/15 flex items-center justify-center text-white transition-all"
-            >
-              <ChevronLeft className="h-5 w-5" />
-            </button>
-            <button
-              onClick={() => scroll("right")}
-              className="w-10 h-10 rounded-full border border-white/20 bg-white/5 hover:bg-white/15 flex items-center justify-center text-white transition-all"
-            >
-              <ChevronRight className="h-5 w-5" />
-            </button>
+          {/* Right — mock video cards */}
+          <div className="flex gap-4 items-end shrink-0">
+            {mockVideos.map((v, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.15 * i, type: "spring", stiffness: 80 }}
+                style={{ marginTop: i === 1 ? 0 : i === 0 ? 40 : 24 }}
+                className={`relative w-[130px] sm:w-[155px] aspect-[9/16] rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-gradient-to-br ${v.color} backdrop-blur-sm group`}
+              >
+                {/* Play icon */}
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="w-11 h-11 rounded-full bg-white/15 border border-white/20 flex items-center justify-center group-hover:bg-white/25 transition-all">
+                    <svg className="h-5 w-5 text-white fill-white ml-0.5" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                  </div>
+                </div>
+
+                {/* TikTok music note */}
+                <div className="absolute top-3 right-3 w-7 h-7 rounded-full bg-black/40 flex items-center justify-center">
+                  <Music2 className="h-3.5 w-3.5 text-white" />
+                </div>
+
+                {/* Stats */}
+                <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/70 to-transparent">
+                  <div className="flex flex-col gap-1.5">
+                    <div className="flex items-center gap-1 text-white/80">
+                      <Heart className="h-3 w-3 fill-white/80" />
+                      <span className="text-[10px] font-semibold">{v.likes}</span>
+                    </div>
+                    <div className="flex items-center gap-1 text-white/80">
+                      <MessageCircle className="h-3 w-3" />
+                      <span className="text-[10px] font-semibold">{v.comments}</span>
+                    </div>
+                    <div className="flex items-center gap-1 text-white/80">
+                      <Share2 className="h-3 w-3" />
+                      <span className="text-[10px] font-semibold">{v.shares}</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* TikTok neon border glow on hover */}
+                <div className="absolute inset-0 rounded-2xl ring-1 ring-[#fe2c55]/0 group-hover:ring-[#fe2c55]/60 transition-all duration-300" />
+              </motion.div>
+            ))}
           </div>
+
         </div>
-
-        {status === "loading" && (
-          <div className="flex gap-4 overflow-hidden">
-            {[...Array(4)].map((_, i) => (
-              <div key={i} className="shrink-0 w-[260px] sm:w-[300px] aspect-[9/16] rounded-2xl bg-white/5 animate-pulse" />
-            ))}
-          </div>
-        )}
-
-        {(status === "error" || status === "no-token") && (
-          <div className="text-center py-16">
-            <p className="text-white/40 text-sm">
-              {status === "no-token" ? t.noToken : t.error}
-            </p>
-            <a
-              href="https://www.facebook.com/p/auto-%C3%A9cole-yosra-Harrabi-100094160687636/reels/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-6 inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white px-6 py-3 rounded-full text-sm font-semibold transition-all border border-white/20"
-            >
-              <svg className="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-              </svg>
-              Voir nos Reels sur Facebook
-            </a>
-          </div>
-        )}
-
-        {status === "ok" && (
-          <div
-            ref={scrollRef}
-            className="flex gap-5 overflow-x-auto pb-4 snap-x snap-mandatory scroll-smooth"
-            style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
-          >
-            {reels.map((reel) => (
-              <ReelCard key={reel.id} reel={reel} onClick={() => setSelected(reel)} />
-            ))}
-          </div>
-        )}
       </div>
-
-      {selected && (
-        <VideoModal reel={selected} onClose={() => setSelected(null)} t={t} />
-      )}
     </section>
   );
 }
