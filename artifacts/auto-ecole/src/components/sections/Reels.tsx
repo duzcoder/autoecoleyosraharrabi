@@ -38,9 +38,9 @@ const content = {
 };
 
 const videos = [
-  "/videos/demo1.mp4",
-  "/videos/demo2.mp4",
-  "/videos/demo3.mp4",
+  "/videos/tiktok1.mp4",
+  "/videos/tiktok2.mp4",
+  "/videos/tiktok3.mp4",
 ];
 
 export function Reels() {
