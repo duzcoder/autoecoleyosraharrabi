@@ -62,11 +62,11 @@ export function Hero() {
                 <ArrowRight className="h-4 w-4 group-hover:translate-x-0.5 transition-transform" />
               </a>
               <a
-                href="tel:+21622300220"
+                href="tel:+21623207354"
                 className="inline-flex items-center gap-2 border border-white/30 bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white px-6 py-3 rounded-full font-semibold text-sm transition-all"
               >
                 <PhoneCall className="h-4 w-4 shrink-0" />
-                +216 22 300 220
+                +216 23 207 354
               </a>
             </motion.div>
 
