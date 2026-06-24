@@ -41,7 +41,6 @@ const content = {
 const videos = [
   "/videos/tiktok1.mp4",
   "/videos/tiktok2.mp4",
-  "/videos/tiktok3.mp4",
 ];
 
 function AutoPlayVideo({ src, delay }: { src: string; delay: number }) {
