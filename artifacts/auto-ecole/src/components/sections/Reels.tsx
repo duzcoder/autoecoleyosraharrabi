@@ -130,7 +130,7 @@ export function Reels() {
               transition={{ delay: 0.2 }}
               className="flex flex-wrap gap-2 justify-center lg:justify-start mb-10"
             >
-              {[t.pill1, t.pill2, t.pill3, t.pill4].map((tag) => (
+              {[t.pill1, t.pill2, t.pill3].map((tag) => (
                 <span key={tag} className="text-xs font-semibold bg-white/8 border border-white/10 text-white/60 rounded-full px-3 py-1">
                   #{tag}
                 </span>
