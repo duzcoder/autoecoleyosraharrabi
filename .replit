@@ -11,6 +11,27 @@ env = { "CI" = "true" }
 [workflows]
 runButton = "Project"
 
+[[workflows.workflow]]
+name = "Project"
+mode = "parallel"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Start auto-ecole"
+
+[[workflows.workflow]]
+name = "Start auto-ecole"
+author = "agent"
+
+[workflows.workflow.metadata]
+outputType = "webview"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "PORT=24122 BASE_PATH=/ pnpm --filter @workspace/auto-ecole run dev"
+waitForPort = 24122
+
 [agent]
 stack = "PNPM_WORKSPACE"
 expertMode = true

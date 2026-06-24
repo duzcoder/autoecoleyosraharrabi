@@ -1,0 +1,1 @@
+- [Auto-ecole vite migration](auto-ecole-migration.md) — next-intl replaced with custom React context; workflow needs inline PORT=24122 BASE_PATH=/ env vars.

@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/"
+title = "Auto École Yosra Harrabi"
+version = "1.0.0"
+id = "artifacts/auto-ecole"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 24122
+
+[services.development]
+run = "pnpm --filter @workspace/auto-ecole run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/auto-ecole", "run", "build" ]
+publicDir = "artifacts/auto-ecole/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "24122"
+BASE_PATH = "/"
