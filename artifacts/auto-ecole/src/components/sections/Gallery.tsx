@@ -1,13 +1,14 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useLocale } from "@/i18n/context";
 import { motion, AnimatePresence } from "framer-motion";
-import { X } from "lucide-react";
+import { X, ChevronLeft, ChevronRight } from "lucide-react";
 
 export function Gallery() {
   const locale = useLocale();
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   const images = Array.from({ length: 13 }, (_, i) => `/images/gallery/students${i + 1}.jpg`);
 
@@ -31,6 +32,10 @@ export function Gallery() {
 
   const t = content[locale as keyof typeof content] || content.fr;
 
+  const scroll = (dir: "left" | "right") => {
+    scrollRef.current?.scrollBy({ left: dir === "right" ? 420 : -420, behavior: "smooth" });
+  };
+
   return (
     <section id="gallery" className="py-24 bg-white dark:bg-zinc-950">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -46,12 +51,15 @@ export function Gallery() {
           </p>
         </div>
 
-        {/* Album Slider Layout */}
+        {/* Slider */}
         <div className="relative w-full">
-          {/* Scroll hints */}
           <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-white dark:from-zinc-950 to-transparent z-10 pointer-events-none" />
-          
-          <div className="flex gap-4 overflow-x-auto pb-8 snap-x snap-mandatory hide-scrollbar style-hide-scrollbar">
+
+          <div
+            ref={scrollRef}
+            className="flex gap-4 overflow-x-auto pb-6 snap-x snap-mandatory"
+            style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+          >
             {images.map((src, index) => (
               <motion.div
                 key={index}
@@ -61,7 +69,7 @@ export function Gallery() {
                 transition={{ duration: 0.5, delay: (index % 5) * 0.1 }}
                 className="shrink-0 snap-center first:pl-4 last:pr-4"
               >
-                <div 
+                <div
                   className="relative w-[300px] sm:w-[400px] aspect-[4/3] rounded-2xl overflow-hidden cursor-pointer group shadow-md hover:shadow-2xl transition-all duration-300"
                   onClick={() => setSelectedImage(src)}
                 >
@@ -77,16 +85,28 @@ export function Gallery() {
             ))}
           </div>
         </div>
+
+        {/* Arrow buttons — desktop only */}
+        <div className="hidden md:flex items-center justify-center gap-4 mt-6">
+          <button
+            onClick={() => scroll("left")}
+            aria-label="Précédent"
+            className="flex items-center justify-center w-12 h-12 rounded-full border-2 border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-zinc-600 dark:text-zinc-300 hover:border-primary hover:text-primary hover:shadow-md transition-all duration-200"
+          >
+            <ChevronLeft className="h-6 w-6" />
+          </button>
+          <button
+            onClick={() => scroll("right")}
+            aria-label="Suivant"
+            className="flex items-center justify-center w-12 h-12 rounded-full border-2 border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-zinc-600 dark:text-zinc-300 hover:border-primary hover:text-primary hover:shadow-md transition-all duration-200"
+          >
+            <ChevronRight className="h-6 w-6" />
+          </button>
+        </div>
       </div>
 
       <style dangerouslySetInnerHTML={{__html: `
-        .style-hide-scrollbar::-webkit-scrollbar {
-          display: none;
-        }
-        .style-hide-scrollbar {
-          -ms-overflow-style: none;
-          scrollbar-width: none;
-        }
+        #gallery div[style*="scrollbar-width"] ::-webkit-scrollbar { display: none; }
       `}} />
 
       {/* Lightbox */}
@@ -101,10 +121,7 @@ export function Gallery() {
           >
             <button
               className="absolute top-6 right-6 text-white/70 hover:text-white bg-black/50 p-2 rounded-full backdrop-blur-sm transition-colors z-50"
-              onClick={(e) => {
-                e.stopPropagation();
-                setSelectedImage(null);
-              }}
+              onClick={(e) => { e.stopPropagation(); setSelectedImage(null); }}
             >
               <X className="h-8 w-8" />
             </button>
