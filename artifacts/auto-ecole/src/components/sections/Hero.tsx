@@ -3,6 +3,8 @@
 import { useTranslations } from "@/i18n/context";
 import { motion } from "framer-motion";
 import { ArrowRight, PhoneCall } from "lucide-react";
+import React, { useState } from "react";
+import { Button } from "../ui/button";
 
 export function Hero() {
   const t = useTranslations("Hero");
@@ -52,22 +54,24 @@ export function Hero() {
               initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.23 }}
-              className="flex flex-wrap items-center justify-center lg:justify-start gap-4"
+              className="flex flex-col items-center lg:items-start gap-4"
             >
-              <a
-                href="#services"
-                className="group inline-flex items-center gap-2 bg-[#E63946] hover:bg-[#c8303c] text-white px-6 py-3 rounded-full font-semibold text-sm transition-all hover:scale-105 shadow-lg shadow-red-900/50"
+              <Button
+                onClick={() => setShowReg((prev) => !prev)}
+                className="cta-button bg-[#E63946] hover:bg-[#c8303c] text-white"
               >
-                {t("cta_courses")}
-                <ArrowRight className="h-4 w-4 group-hover:translate-x-0.5 transition-transform" />
-              </a>
-              <a
-                href="tel:+21623207354"
-                className="inline-flex items-center gap-2 border border-white/30 bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white px-6 py-3 rounded-full font-semibold text-sm transition-all"
-              >
-                <PhoneCall className="h-4 w-4 shrink-0" />
-                +216 23 207 354
-              </a>
+                Dossier d'inscription :
+              </Button>
+              {showReg && (
+                <div className="registration-panel mt-4 p-4 bg-white/10 backdrop-blur rounded text-left">
+                  <h3 className="text-lg font-semibold mb-2 text-white">Dossier d'inscription</h3>
+                  <ul className="list-disc list-inside space-y-1 text-white/80">
+                    <li><a href="/files/inscription-form.pdf" target="_blank" rel="noopener">Formulaire d'inscription (PDF)</a></li>
+                    <li><a href="/files/conditions.pdf" target="_blank" rel="noopener">Conditions Générales</a></li>
+                    <li><a href="/files/paiement.pdf" target="_blank" rel="noopener">Modalités de paiement</a></li>
+                  </ul>
+                </div>
+              )}
             </motion.div>
 
             {/* Stats */}
