@@ -16,7 +16,7 @@ export function Services() {
       prices: [
         { label: "Heure code", price: "15", icon: BookOpen, highlight: false },
         { label: "Heure conduite", price: "30", icon: Car, highlight: true },
-        { label: "Heure manœuvre", price: "35", icon: RotateCcw, highlight: false },
+        { label: "Heure manœuvre", price: "30", icon: RotateCcw, highlight: false },
         { label: "Heure recyclage", price: "35", icon: Car, highlight: false },
       ],
     },
@@ -28,7 +28,7 @@ export function Services() {
       prices: [
         { label: "Theory lesson", price: "15", icon: BookOpen, highlight: false },
         { label: "Driving lesson", price: "30", icon: Car, highlight: true },
-        { label: "Manoeuvre lesson", price: "35", icon: RotateCcw, highlight: false },
+        { label: "Manoeuvre lesson", price: "30", icon: RotateCcw, highlight: false },
         { label: "Refresher lesson", price: "35", icon: Car, highlight: false },
       ],
     },
@@ -40,7 +40,7 @@ export function Services() {
       prices: [
         { label: "ساعة نظرية", price: "15", icon: BookOpen, highlight: false },
         { label: "ساعة قيادة", price: "30", icon: Car, highlight: true },
-        { label: "ساعة مناورة", price: "35", icon: RotateCcw, highlight: false },
+        { label: "ساعة مناورة", price: "30", icon: RotateCcw, highlight: false },
         { label: "ساعة تجديد", price: "35", icon: Car, highlight: false },
       ],
     },
