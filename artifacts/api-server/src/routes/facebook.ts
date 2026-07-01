@@ -40,7 +40,7 @@ router.get("/facebook/reels", async (req, res) => {
     url.searchParams.set("access_token", token);
 
     const response = await fetch(url.toString());
-    const data: FBResponse = await response.json();
+    const data = (await response.json()) as FBResponse;
 
     if (data.error) {
       logger.warn({ error: data.error }, "Facebook Graph API error");
