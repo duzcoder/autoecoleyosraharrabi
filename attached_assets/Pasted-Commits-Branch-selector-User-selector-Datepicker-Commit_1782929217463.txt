@@ -1,0 +1,148 @@
+Commits
+Branch selector
+User selector
+Datepicker
+Commit history
+Commits on Jul 1, 2026
+
+    Add an image to the project assets
+    replit-agent
+    replit-agent
+    committed
+    5 minutes ago
+    ·
+    Update price for driving lesson maneuver hours
+    replit-agent
+    replit-agent
+    committed
+    12 minutes ago
+    Update the price for maneuver lessons across all languages
+    replit-agent
+    replit-agent
+    committed
+    13 minutes ago
+
+Commits on Jun 24, 2026
+
+    fixed
+    duzcoder
+    duzcoder
+    committed
+    last week
+    Add Vercel configuration and update build settings for deployment
+    replit-agent
+    replit-agent
+    committed
+    last week
+    ·
+    Add a floating WhatsApp button for instant messaging
+    replit-agent
+    replit-agent
+    committed
+    last week
+    Update the contact phone number displayed on the website
+    replit-agent
+    replit-agent
+    committed
+    last week
+    Update driving lesson prices across all languages
+    replit-agent
+    replit-agent
+    committed
+    last week
+    Fix solo "#" appearing in social media links section
+    replit-agent
+    replit-agent
+    committed
+    last week
+    Remove contact section and policy links from the website
+    replit-agent
+    replit-agent
+    committed
+    last week
+    Remove testimonial pills from website content
+    replit-agent
+    replit-agent
+    committed
+    last week
+    Remove the third video from the display section
+    replit-agent
+    replit-agent
+    committed
+    last week
+    Update video files to ensure they play on all browsers
+    replit-agent
+    replit-agent
+    committed
+    last week
+    Replace demo videos with actual TikTok clips for the website
+    replit-agent
+    replit-agent
+    committed
+    last week
+    Use locally hosted videos for the TikTok section to ensure playback
+    replit-agent
+    replit-agent
+    committed
+    last week
+    Add looping TikTok videos and remove social media badge
+    replit-agent
+    replit-agent
+    committed
+    last week
+    Update social media section to feature TikTok and enhance visual appeal
+    replit-agent
+    replit-agent
+    committed
+    last week
+    Update the services section to display pricing information
+    replit-agent
+    replit-agent
+    committed
+    last week
+    Add navigation arrows to image gallery for desktop browsing
+    replit-agent
+    replit-agent
+    committed
+    last week
+    Add TikTok link and icon to the footer social media section
+    replit-agent
+    replit-agent
+    committed
+    last week
+    Update the image used for sharing the application on social media
+    replit-agent
+    replit-agent
+    committed
+    last week
+    Add section to display Facebook Reels automatically
+    replit-agent
+    replit-agent
+    committed
+    last week
+    Fix: Auto École workflow confirmed running (PORT=24122 BASE_PATH=/)
+    replit-agent
+    replit-agent
+    committed
+    last week
+    Migrate website to Vite and update internationalization features
+    replit-agent
+    replit-agent
+    committed
+    last week
+    Task start baseline checkpoint for code review
+    replit-agent
+    replit-agent
+    committed
+    last week
+    first commit
+    duzcoder
+    duzcoder
+    committed
+    last week
+    ·
+    first commit
+    duzcoder
+    duzcoder
+    committed
+    last week
