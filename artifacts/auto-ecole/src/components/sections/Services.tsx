@@ -1,17 +1,29 @@
 "use client";
 
+import { useState } from "react";
 import { useLocale } from "@/i18n/context";
-import { motion } from "framer-motion";
-import { BookOpen, Car, RotateCcw, ArrowRight } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { 
+  BookOpen, 
+  Car, 
+  RotateCcw, 
+  CreditCard, 
+  Banknote, 
+  Camera, 
+  Glasses, 
+  ChevronDown, 
+  ChevronUp 
+} from "lucide-react";
 
 export function Services() {
   const locale = useLocale();
+  const [showDossier, setShowDossier] = useState(false);
 
   const content = {
     fr: {
       title: "Nos Tarifs",
       heading: "Des formations adaptées à vos besoins",
-      cta: "Découvrir nos forfaits",
+      cta: "Dossier d'inscription",
       perHour: "/ heure",
       prices: [
         { label: "Heure code", price: "15", icon: BookOpen, highlight: false },
@@ -19,11 +31,34 @@ export function Services() {
         { label: "Heure manœuvre", price: "30", icon: RotateCcw, highlight: false },
         { label: "Heure recyclage", price: "35", icon: Car, highlight: false },
       ],
+      dossierTitle: "Pièces à fournir pour le dossier d'inscription",
+      dossierItems: [
+        {
+          title: "Pièce d'Identité",
+          desc: "Copie de la Carte d'Identité Nationale (ou carte de séjour pour les étrangers)",
+          icon: CreditCard,
+        },
+        {
+          title: "Frais d'inscription",
+          desc: "100.000 DT pour les frais de dossier",
+          icon: Banknote,
+        },
+        {
+          title: "Photos d'identité",
+          desc: "3 photos d'identité récentes",
+          icon: Camera,
+        },
+        {
+          title: "Certificat Médical",
+          desc: "Certificat médical délivré par un ophtalmologue (pour les porteurs de lunettes de vue)",
+          icon: Glasses,
+        },
+      ],
     },
     en: {
       title: "Our Rates",
       heading: "Training tailored to your needs",
-      cta: "Discover our packages",
+      cta: "Registration Folder",
       perHour: "/ hour",
       prices: [
         { label: "Theory lesson", price: "15", icon: BookOpen, highlight: false },
@@ -31,17 +66,63 @@ export function Services() {
         { label: "Manoeuvre lesson", price: "30", icon: RotateCcw, highlight: false },
         { label: "Refresher lesson", price: "35", icon: Car, highlight: false },
       ],
+      dossierTitle: "Required documents for the registration folder",
+      dossierItems: [
+        {
+          title: "Identity Document",
+          desc: "Copy of the National Identity Card (or residence permit for foreigners)",
+          icon: CreditCard,
+        },
+        {
+          title: "Registration Fees",
+          desc: "100.000 DT for the folder registration fees",
+          icon: Banknote,
+        },
+        {
+          title: "Photos",
+          desc: "3 recent passport-sized photos",
+          icon: Camera,
+        },
+        {
+          title: "Medical Certificate",
+          desc: "Medical certificate issued by an ophthalmologist (for wearers of prescription glasses)",
+          icon: Glasses,
+        },
+      ],
     },
     ar: {
       title: "أسعارنا",
       heading: "تدريب مصمم خصيصاً لاحتياجاتك",
-      cta: "اكتشف باقاتنا",
+      cta: "ملف التسجيل",
       perHour: "/ ساعة",
       prices: [
         { label: "ساعة نظرية", price: "15", icon: BookOpen, highlight: false },
         { label: "ساعة قيادة", price: "30", icon: Car, highlight: true },
         { label: "ساعة مناورة", price: "30", icon: RotateCcw, highlight: false },
         { label: "ساعة تجديد", price: "35", icon: Car, highlight: false },
+      ],
+      dossierTitle: "الوثائق المطلوبة لملف التسجيل",
+      dossierItems: [
+        {
+          title: "بطاقة الهوية",
+          desc: "نسخة من بطاقة التعريف الوطنية (أو بطاقة إقامة للأجانب)",
+          icon: CreditCard,
+        },
+        {
+          title: "رسوم التسجيل",
+          desc: "100.000 د.ت لمعالجة ملف التسجيل",
+          icon: Banknote,
+        },
+        {
+          title: "الصور الشخصية",
+          desc: "3 صور شخصية حديثة",
+          icon: Camera,
+        },
+        {
+          title: "شهادة طبية",
+          desc: "شهادة طبية من طبيب عيون (لحاملي النظارات الطبية)",
+          icon: Glasses,
+        },
       ],
     },
   };
@@ -141,16 +222,64 @@ export function Services() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.4 }}
-          className="flex justify-center mt-12"
+          className="flex flex-col items-center mt-12"
         >
-          <a
-            href="#contact"
-            className="group inline-flex items-center gap-2 bg-primary text-white px-8 py-4 rounded-full font-semibold text-base hover:bg-primary/90 transition-all hover:shadow-lg hover:shadow-primary/30 hover:scale-105"
+          <button
+            onClick={() => setShowDossier(!showDossier)}
+            className="group inline-flex items-center gap-2 bg-primary text-white px-8 py-4 rounded-full font-semibold text-base hover:bg-primary/90 transition-all hover:shadow-lg hover:shadow-primary/30 hover:scale-105 cursor-pointer outline-none"
           >
             {t.cta}
-            <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
-          </a>
+            {showDossier ? (
+              <ChevronUp className="h-5 w-5" />
+            ) : (
+              <ChevronDown className="h-5 w-5 group-hover:translate-y-0.5 transition-transform" />
+            )}
+          </button>
         </motion.div>
+
+        <AnimatePresence>
+          {showDossier && (
+            <motion.div
+              initial={{ opacity: 0, height: 0, marginTop: 0 }}
+              animate={{ opacity: 1, height: "auto", marginTop: 32 }}
+              exit={{ opacity: 0, height: 0, marginTop: 0 }}
+              transition={{ duration: 0.4, ease: "easeInOut" }}
+              className="overflow-hidden w-full max-w-4xl mx-auto"
+            >
+              <div className="bg-white/60 dark:bg-zinc-900/60 backdrop-blur-xl rounded-[2.5rem] p-8 md:p-10 border border-white/40 dark:border-zinc-800/40 shadow-[0_20px_50px_rgba(0,0,0,0.03)] dark:shadow-none">
+                <h3 className="text-xl md:text-2xl font-extrabold text-zinc-900 dark:text-white text-center mb-8">
+                  {t.dossierTitle}
+                </h3>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  {t.dossierItems.map((item, index) => {
+                    const ItemIcon = item.icon;
+                    return (
+                      <motion.div
+                        key={index}
+                        initial={{ opacity: 0, y: 15 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: index * 0.08 }}
+                        className="flex gap-4 p-5 rounded-2xl bg-white/40 dark:bg-zinc-950/40 border border-zinc-100/50 dark:border-zinc-800/50 transition-all duration-300 hover:shadow-md hover:-translate-y-0.5"
+                      >
+                        <div className="w-12 h-12 shrink-0 rounded-xl bg-primary/10 text-primary flex items-center justify-center">
+                          <ItemIcon className="h-6 w-6" />
+                        </div>
+                        <div>
+                          <h4 className="font-bold text-zinc-800 dark:text-white mb-1">
+                            {item.title}
+                          </h4>
+                          <p className="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed">
+                            {item.desc}
+                          </p>
+                        </div>
+                      </motion.div>
+                    );
+                  })}
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </section>
   );
