@@ -8,6 +8,7 @@ import { Button } from "../ui/button";
 
 export function Hero() {
   const t = useTranslations("Hero");
+  const [showReg, setShowReg] = useState(false);
 
   return (
     <section
